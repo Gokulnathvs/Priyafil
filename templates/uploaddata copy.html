@@ -1,0 +1,444 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Priyafil | Upload Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="/static/assets/images/icon/favicon.ico">
+    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="/static/assets/css/metisMenu.css">
+    <link rel="stylesheet" href="/static/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/assets/css/slicknav.min.css">
+    <!-- amchart css -->
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <!-- others css -->
+    <link rel="stylesheet" href="/static/assets/css/typography.css">
+    <link rel="stylesheet" href="/static/assets/css/default-css.css">
+    <link rel="stylesheet" href="/static/assets/css/styles.css">
+    <link rel="stylesheet" href="/static/assets/css/responsive.css">
+    <!-- modernizr css -->
+    <script src="/static/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+
+    <!-- csv, xlsx css -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.3/dist/xlsx.full.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .table-container {
+            margin: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border-radius: 10px; /* Add border-radius for curved edges */
+            overflow: hidden; /* Hide overflow to prevent curved corners from clipping content */
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #17a2b8;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .slider-container {
+            margin-top: 10px;
+            margin-left: 30px;
+        }
+
+        .slider-label {
+            font-weight: bold;
+        }
+
+        .upload-container {
+            margin-top: 20px;
+            margin-left: 30px; /* Add margin-left to move the button slightly to the right */
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- preloader area start -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- preloader area end -->
+    <!-- page container area start -->
+    <div class="page-container">
+        <!-- sidebar menu area start -->
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <a href="/index3"><h3 style="color: white;">Priyafil</h3></a>
+                </div>
+            </div>
+            <div class="main-menu">
+                <div class="menu-inner">
+                    <nav>
+                        <ul class="metismenu" id="menu">
+                            
+                            <!-- Dashboard -->
+                            <li><a href="/index3"><i class="ti-dashboard"></i> <span>Dashboard</span></a>
+
+                            <!-- Charts -->
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Charts</span></a>
+                                <ul class="collapse">
+                                    <li><a href="/barchart">Bar Chart</a></li>
+                                    <li><a href="/linechart">Line Chart</a></li>
+                                    <li><a href="/piechart">Pie Chart</a></li>
+                                </ul>
+                            </li>
+                            
+                            <!-- Tables -->
+                            <li>
+                                <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-table"></i><span>Tables </span></a>
+                                <ul class="collapse">
+                                    <li><a href="/tablebasic">Main table</a></li>
+                                    <li><a href="">Insights</a>
+                                        <ul class="collapse">
+                                            <li><a href="/overproduction">Over Production </a></li>
+                                            <li><a href="/underproduction">Under Production </a></li>
+                                            <li><a href="/optimalproduction">Optimal Production </a></li>
+                                            <li><a href="">Top 5 </a>
+                                                <ul class="collapse">
+                                                    <li><a href="">Fabricated </a>
+                                                        <ul class="collapse">
+                                                            <li><a href="/top1">Top 5 Fabricated in KGS for each Year </a></li>                                            
+                                                            <li><a href="/top2">Top 5 Fabricated in KGS for each Month </a></li>
+                                                            
+                                                        </ul>
+                                                    <li>
+
+                                                    <li><a href="">Sold </a>
+                                                        <ul class="collapse">
+                                                            <li><a href="/top4">Top 5 Sold in KGS for each Year </a></li>
+                                                            <li><a href="/top5">Top 5 Sold in AMOUNT for each Year </a></li>
+                                                            <li><a href="/top7">Top 5 Sold in KGS for each Month </a></li>
+                                                            <li><a href="/top8">Top 5 Sold in Amount for each Month </a></li>
+                                                            
+                                                        </ul>
+                                                    <li>
+
+                                                    <li><a href="">Product </a>
+                                                        <ul class="collapse">
+                                                            <li><a href="/top9">Top sold Products from each Month in Kgs </a></li>
+                                                            <li><a href="/top10">Top sold Products from each Month in Amount </a></li>
+                                                            
+                                                        </ul>
+                                                    <li>
+
+                                                    <li><a href="">State </a>
+                                                        <ul class="collapse">
+                                                            <li><a href="top11">Top 5 STATE for each Year in terms of Amount </a></li>
+                                                            
+                                                        </ul>
+                                                    <li>
+
+                                                    <li><a href="">Customer </a>
+                                                        <ul class="collapse">
+                                                            <li><a href="top12">Top 5 Customer for each Year in terms of Amount  </a></li>
+                                                            
+                                                        </ul>
+                                                    <li>
+
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                            <!-- Upload Data -->
+                            <li><a href="/uploaddata"><i class="fa fa-database"></i> <span>Upload Data </span></a>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- sidebar menu area end -->
+
+        <!-- main content area start -->
+        <div class="main-content">
+            <!-- header area start -->
+            <div class="header-area">
+                <div class="row align-items-center">
+                    <!-- nav and search button -->
+                    <div class="col-md-6 col-sm-8 clearfix">
+                        <div class="nav-btn pull-left">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+            <!-- header area end -->
+            <!-- page title area start -->
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">Dashboard</h4>
+                            <ul class="breadcrumbs pull-left">
+                                <li><a href="/index3">Home</a></li>
+                                <li><span>Upload Data</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <img class="avatar user-thumb" src="/static/assets/images/author/avatar.png" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Name <i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- page title area end -->
+            <div class="upload-container">
+                <input type="file" id="upload-file" onchange="handleFileUpload()" accept=".csv, .xlsx">
+            </div>
+
+            <div class="slider-container">
+                <label class="slider-label">Rows to display </label>
+                <input type="range" id="row-slider" min="10" max="6491" step="1" value="10" onchange="updateTableRows()">
+            </div>
+
+            <div class="table-container" id="output"></div>
+            
+            <!-- main content area end -->
+
+            <div class="chart-buttons">
+                <button id="bar-chart-btn" disabled>Bar Chart</button>
+                <button id="pie-chart-btn" disabled>Pie Chart</button>
+            </div>
+            
+            <div id="chart-container"></div>
+
+            <script>
+                var dataRows = [];  // Store all data rows
+                var displayedRows = [];  // Store displayed rows
+                var numDisplayedRows = 10;  // Number of rows to display initially
+        
+                function handleFileUpload() {
+                    var file = document.getElementById("upload-file").files[0];
+                    if (file) {
+                        var fileExtension = file.name.split('.').pop().toLowerCase();
+                        if (fileExtension === 'csv') {
+                            handleCSV(file);
+                        } else if (fileExtension === 'xlsx') {
+                            handleExcel(file);
+                        } else {
+                            alert('Invalid file format. Please upload a CSV or XLSX file.');
+                        }
+                    }
+                }
+        
+                function handleCSV(file) {
+                    Papa.parse(file, {
+                        header: true,
+                        dynamicTyping: true,
+                        complete: function(results) {
+                            var data = results.data;
+                            dataRows = data;
+                            displayedRows = data.slice(0, numDisplayedRows);
+                            displayTable(displayedRows);
+                        }
+                    });
+                }
+        
+                function handleExcel(file) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var data = new Uint8Array(e.target.result);
+                        var workbook = XLSX.read(data, { type: 'array' });
+                        var sheet = workbook.Sheets[workbook.SheetNames[0]];
+                        var jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: 'null' });
+                        dataRows = jsonData;
+                        displayedRows = jsonData.slice(0, numDisplayedRows);
+                        displayTable(displayedRows);
+                    };
+                    reader.readAsArrayBuffer(file);
+                }
+        
+                function displayTable(rows) {
+                    var html = "<table>";
+                    html += "<tr>";
+                    for (var key in rows[0]) {
+                        html += "<th>" + key + "</th>";
+                    }
+                    html += "</tr>";
+                    for (var i = 0; i < rows.length; i++) {
+                        html += "<tr>";
+                        for (var key in rows[i]) {
+                            html += "<td>" + rows[i][key] + "</td>";
+                        }
+                        html += "</tr>";
+                    }
+                    html += "</table>";
+                    document.getElementById("output").innerHTML = html;
+                }
+        
+                function updateTableRows() {
+                    numDisplayedRows = parseInt(document.getElementById("row-slider").value);
+                    displayedRows = dataRows.slice(0, numDisplayedRows);
+                    displayTable(displayedRows);
+                }
+
+            </script>
+
+            // Add event listeners to chart buttons
+                document.getElementById("bar-chart-btn").addEventListener("click", createBarChart);
+                document.getElementById("pie-chart-btn").addEventListener("click", createPieChart);
+
+                function handleFileUpload() {
+                    // Code to handle file upload and display table
+
+                    // Enable chart buttons
+                    document.getElementById("bar-chart-btn").disabled = false;
+                    document.getElementById("pie-chart-btn").disabled = false;
+                }
+
+                function createBarChart() {
+                    // Code to create bar chart based on selected attributes
+                    // Retrieve selected attributes from user input
+                    // Process data and generate the bar chart
+
+                    // Display the chart in the chart container
+                    document.getElementById("chart-container").innerHTML = "<h3>Bar Chart</h3>";
+                }
+
+                function createPieChart() {
+                    // Code to create pie chart based on selected attributes
+                    // Retrieve selected attributes from user input
+                    // Process data and generate the pie chart
+
+                    // Display the chart in the chart container
+                    document.getElementById("chart-container").innerHTML = "<h3>Pie Chart</h3>";
+                }
+
+            <script>
+            
+            </script>
+
+            <div class="chart-options">
+                <label for="x-axis-select">X-Axis:</label>
+                <select id="x-axis-select">
+                    <!-- Populate with available attributes -->
+                    <option value="attribute1">Attribute 1</option>
+                    <option value="attribute2">Attribute 2</option>
+                    <!-- Add more options as needed -->
+                </select>
+            
+                <label for="y-axis-select">Y-Axis:</label>
+                <select id="y-axis-select">
+                    <!-- Populate with available attributes -->
+                    <option value="attribute3">Attribute 3</option>
+                    <option value="attribute4">Attribute 4</option>
+                    <!-- Add more options as needed -->
+                </select>
+            
+                <label for="label-select">Label:</label>
+                <select id="label-select">
+                    <!-- Populate with available attributes -->
+                    <option value="attribute5">Attribute 5</option>
+                    <option value="attribute6">Attribute 6</option>
+                    <!-- Add more options as needed -->
+                </select>
+            
+                <label for="value-select">Value:</label>
+                <select id="value-select">
+                    <!-- Populate with available attributes -->
+                    <option value="attribute7">Attribute 7</option>
+                    <option value="attribute8">Attribute 8</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            
+
+
+        <!-- footer area start-->
+        <footer>
+            <div class="footer-area">
+                <p>Designed & Maintained by &copy;&nbsp;<a href="http://numentrix.com/">Numentrix Consulting</a>.</p>
+            </div>
+        </footer>
+        <!-- footer area end-->
+    </div>
+    <!-- page container area end -->
+    
+    <!-- jquery latest version -->
+    <script src="/static/assets/js/vendor/jquery-2.2.4.min.js"></script>
+    <!-- bootstrap 4 js -->
+    <script src="/static/assets/js/popper.min.js"></script>
+    <script src="/static/assets/js/bootstrap.min.js"></script>
+    <script src="/static/assets/js/owl.carousel.min.js"></script>
+    <script src="/static/assets/js/metisMenu.min.js"></script>
+    <script src="/static/assets/js/jquery.slimscroll.min.js"></script>
+    <script src="/static/assets/js/jquery.slicknav.min.js"></script>
+    <!-- start chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <!-- start highcharts js -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- start zingchart js -->
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script>
+    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+    </script>
+    <!-- start amchart js -->
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <!-- all line chart activation -->
+    <script src="/static/assets/js/line-chart.js"></script>
+    <!-- all bar chart activation -->
+    <script src="/static/assets/js/bar-chart.js"></script>
+    <!-- all pie chart -->
+    <script src="/static/assets/js/pie-chart.js"></script>
+    <!-- others plugins -->
+    <script src="/static/assets/js/plugins.js"></script>
+    <script src="/static/assets/js/scripts.js"></script>
+    <script>
+        // Get the form element
+        const form = document.getElementById('starter-form');
+
+        // Add an event listener for form submission
+        form.addEventListener('Log Out', function (event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            // Redirect to the desired page
+            window.location.href = '/';
+        });
+    </script>
+
+</body>
+
+</html>

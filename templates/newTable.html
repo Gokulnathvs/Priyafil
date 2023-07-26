@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Priyafil | Table</title>
+    <style>
+        /* Add CSS styling for the table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        .slider-container {
+            margin: 20px 0;
+            width: 100%;
+        }
+        
+        .slider {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Table</h1>
+    <div class="slider-container">
+        <input type="range" min="10" max="6491" step="10" value="10" class="slider" id="mySlider">
+    </div>
+    <table id="csvTable">
+        <!-- CSV data will be inserted here dynamically -->
+    </table>
+
+    <script>
+        // Step 2: Read the CSV file using JavaScript
+        var csvFilePath = '/static/assets/data/MONTH YEAR WISE AGGREGATED.csv';
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', csvFilePath, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var csvData = xhr.responseText;
+
+                // Parse CSV data into an array or object
+                var parsedData = parseCSV(csvData);
+
+                // Generate HTML code dynamically based on parsed CSV data
+                var numRows = parsedData.length;
+                var defaultNumValues = 10;
+                var htmlCode = generateHTML(parsedData, defaultNumValues); // Display defaultNumValues rows by default
+
+                // Insert the generated HTML code into the table element
+                var csvTable = document.getElementById('csvTable');
+                csvTable.innerHTML = htmlCode;
+
+                // Get the slider element
+                var slider = document.getElementById('mySlider');
+
+                // Update the table based on the slider value
+                slider.addEventListener('input', function () {
+                    var numValues = parseInt(slider.value);
+
+                    if (numValues >= numRows) {
+                        csvTable.innerHTML = htmlCode; // Show all rows if slider value is greater than or equal to numRows
+                    } else {
+                        var updatedHTML = generateHTML(parsedData, numValues);
+                        csvTable.innerHTML = updatedHTML;
+                    }
+                });
+            }
+        };
+        xhr.send();
+
+
+        // Example CSV parsing function
+        function parseCSV(csvData) {
+            // Implement your own CSV parsing logic here
+            // This example assumes that each row is separated by a new line and each value is separated by a comma
+            var rows = csvData.split('\n');
+            var parsedData = [];
+
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i].split(',');
+                parsedData.push(row);
+            }
+
+            return parsedData;
+        }
+
+        // Example HTML code generation function
+        function generateHTML(parsedData, numValues) {
+            var htmlCode = '';
+
+            for (var i = 0; i < numValues; i++) {
+                htmlCode += '<tr>';
+
+                for (var j = 0; j < parsedData[i].length; j++) {
+                    if (i === 0) {
+                        htmlCode += '<th>' + (parsedData[i][j] || 'null') + '</th>';
+                    } else {
+                        htmlCode += '<td>' + (parsedData[i][j] || 'null') + '</td>';
+                    }
+                }
+
+                htmlCode += '</tr>';
+            }
+
+            return htmlCode;
+        }
+
+        // Get the slider element
+        var slider = document.getElementById('mySlider');
+
+        // Update the table based on the slider value
+        slider.addEventListener('input', function () {
+            var numValues = parseInt(slider.value);
+
+            var updatedHTML = generateHTML(parsedData, numValues);
+            csvTable.innerHTML = updatedHTML;
+        });
+    </script>
+</body>
+</html>
