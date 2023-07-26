@@ -1,0 +1,10 @@
+pandas
+openpyxl
+plotly==5.9.0
+werkzeug
+sqlite3
+flask
+pyparsing
+wtforms
+secrets
+os
